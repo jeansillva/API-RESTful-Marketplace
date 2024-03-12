@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.example.marketplace.models.ClienteModel;
 import com.example.marketplace.repositories.ClienteRepository;
 
-import jakarta.validation.Valid;
 
 @Service
 public class ClienteServices {

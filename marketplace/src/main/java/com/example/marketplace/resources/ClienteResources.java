@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,13 +42,23 @@ public class ClienteResources {
         return ResponseEntity.status(HttpStatus.OK).body(cm);
     }
 
-    @PostMapping("/criar")
+    @PostMapping("/post")
     public ResponseEntity<ClienteModel> createCliente(@RequestBody ClienteModel clienteModel){
         ClienteModel savedCliente = clienteServices.saveCliente(clienteModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCliente);
     }
 
-    @DeleteMapping("/remover/{id}")
+    @PutMapping("/put/{id}")
+    public ResponseEntity<Object> modifyCliente(@PathVariable Long id, @RequestBody ClienteModel clienteModel){
+        Optional<ClienteModel> clienteOptional = clienteServices.findById(id);
+        if(clienteOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado!");
+        }
+        ClienteModel cm = clienteServices.saveCliente(clienteModel);
+        return ResponseEntity.status(HttpStatus.OK).body("Cliente Alterado com sucesso!\n" +cm);
+    }
+
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deleteCliente(@PathVariable Long id){
         Optional<ClienteModel> optionalCliente = clienteServices.findById(id);
         if(optionalCliente.isEmpty()){
@@ -56,5 +67,4 @@ public class ClienteResources {
         clienteServices.deleteCliente(id);
         return ResponseEntity.status(HttpStatus.OK).body("Cliente excluído com sucesso!");
     }
-    
 }
