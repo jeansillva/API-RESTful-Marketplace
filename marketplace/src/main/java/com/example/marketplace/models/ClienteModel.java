@@ -1,11 +1,15 @@
 package com.example.marketplace.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +26,9 @@ public class ClienteModel implements Serializable {
     private String endereco;
     private String email;
     private String senha;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<ProdutoModel> produtosComprados;
     
     public ClienteModel(){
 

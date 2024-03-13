@@ -20,7 +20,7 @@ import com.example.marketplace.services.ClienteServices;
 
 
 @RestController
-@RequestMapping(value = "/clientes")
+@RequestMapping(value = "/cliente")
 public class ClienteResources {
 
     @Autowired

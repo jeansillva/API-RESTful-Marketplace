@@ -6,6 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,6 +23,14 @@ public class ProdutoModel implements Serializable {
     private String nome;
     private Double preco;
     private Long qtd;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private ClienteModel cliente;
+
+    @ManyToOne
+    @JoinColumn(name="vendedor_id")
+    private VendedorModel vendedor;
 
     public ProdutoModel() {
     

@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.marketplace.models.ClienteModel;
 import com.example.marketplace.models.ProdutoModel;
 import com.example.marketplace.services.ProdutoServices;
 
 @RestController
-@RequestMapping("/produtos")
+@RequestMapping("/produto")
 public class ProdutoResources {
     
     @Autowired
