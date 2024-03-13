@@ -88,6 +88,10 @@ public class VendedorModel implements Serializable {
         this.senha = senha;
     }
 
+    public List<ProdutoModel> getProdutosPertecentes() {
+        return produtosPertecentes;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;

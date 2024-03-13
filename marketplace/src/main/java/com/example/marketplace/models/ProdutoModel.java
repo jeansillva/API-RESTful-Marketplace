@@ -75,6 +75,22 @@ public class ProdutoModel implements Serializable {
         this.qtd = qtd;
     }
 
+    public ClienteModel getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteModel cliente) {
+        this.cliente = cliente;
+    }
+
+    public VendedorModel getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(VendedorModel vendedor) {
+        this.vendedor = vendedor;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
