@@ -16,11 +16,7 @@ Este projeto faz uso das seguintes tecnologias:
 
 ## Estrutura do Projeto
 
-O projeto segue uma arquitetura em camadas, visando melhor organização e manutenção do código. Até o momento deste commit, algumas das estruturas já implementadas incluem:
-
-- **Entidades em Models**: Definição das entidades que representam os dados do sistema.
-- **Repositórios em Repositories**: Repositórios para acesso e manipulação dos dados no banco.
-- **Implementação de Services e Resources de Cliente**: Início da implementação para gerenciamento dos clientes no sistema.
+O projeto segue uma arquitetura em camadas, visando melhor organização e manutenção do código.
 
 ## Próximos Passos
 
