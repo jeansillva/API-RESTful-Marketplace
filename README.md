@@ -12,7 +12,10 @@ Este projeto faz uso das seguintes tecnologias:
 - **Spring Web**: Para lidar com as requisições HTTP.
 - **Spring Data JPA**: Simplificando a interação com o banco de dados MySQL.
 - **MySQL**: Banco de dados utilizado para armazenamento de informações.
-- **Postman**: Ferramenta utilizada para testar as requisições e respostas da API.
+- **HeidiSQL**: Ferramenta de gerenciamento de banco de dados utilizada para interagir e administrar o MySQL.
+- **Spring Validation**: Utilizada para validar dados de entrada na API, garantindo sua integridade.
+- **Flyway Migrations**: Utilizado para controle de versionamento e migrações do banco de dados, facilitando a evolução da estrutura do banco de dados de forma controlada.
+- **Swagger**: Utilizado para documentação da API, facilitando o entendimento e testes das operações disponíveis.
 
 ## Estrutura do Projeto
 
