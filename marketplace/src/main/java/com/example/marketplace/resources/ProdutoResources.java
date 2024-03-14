@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.marketplace.dtos.ProdutoRecordDto;
+import com.example.marketplace.models.ClienteModel;
 import com.example.marketplace.models.ProdutoModel;
 import com.example.marketplace.services.ProdutoServices;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/produto")
@@ -42,19 +46,21 @@ public class ProdutoResources {
     }
     
     @PostMapping("/post")
-    public ResponseEntity<ProdutoModel> saveProduto(@RequestBody ProdutoModel produtoModel){
+    public ResponseEntity<ProdutoModel> saveProduto(@RequestBody @Valid ProdutoRecordDto produtoRecordDto){
+        ProdutoModel produtoModel = produtoServices.convertDto(produtoRecordDto);
         ProdutoModel savedProduto = produtoServices.saveProduto(produtoModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduto);
     }
 
     @PutMapping("/put/{id}")
-    public ResponseEntity<Object> putProduto(@PathVariable Long id, @RequestBody ProdutoModel produtoModel){
+    public ResponseEntity<Object> putProduto(@PathVariable Long id, @RequestBody @Valid ProdutoRecordDto produtoRecordDto){
         Optional<ProdutoModel> produtoOptional = produtoServices.findById(id);
         if(produtoOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado!");
         }
-        ProdutoModel pm = produtoOptional.get();  
-        return ResponseEntity.status(HttpStatus.OK).body(pm);
+        ProdutoModel produtoModel = produtoServices.convertDto(produtoRecordDto);
+        produtoModel.setId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(produtoServices.saveProduto(produtoModel));
     }
 
     @DeleteMapping("/delete/{id}")

@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.marketplace.dtos.ClienteRecordDto;
 import com.example.marketplace.models.ClienteModel;
 import com.example.marketplace.services.ClienteServices;
+
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -43,19 +46,21 @@ public class ClienteResources {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<ClienteModel> createCliente(@RequestBody ClienteModel clienteModel){
-        ClienteModel savedCliente = clienteServices.saveCliente(clienteModel);
+    public ResponseEntity<ClienteModel> createCliente(@RequestBody @Valid ClienteRecordDto clienteRecordDto){
+        ClienteModel cm = clienteServices.convertDto(clienteRecordDto);
+        ClienteModel savedCliente = clienteServices.saveCliente(cm);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCliente);
     }
 
     @PutMapping("/put/{id}")
-    public ResponseEntity<Object> modifyCliente(@PathVariable Long id, @RequestBody ClienteModel clienteModel){
+    public ResponseEntity<Object> modifyCliente(@PathVariable Long id, @RequestBody @Valid ClienteRecordDto clienteRecordDto){
         Optional<ClienteModel> clienteOptional = clienteServices.findById(id);
         if(clienteOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado!");
         }
-        ClienteModel cm = clienteServices.saveCliente(clienteModel);
-        return ResponseEntity.status(HttpStatus.OK).body("Cliente Alterado com sucesso!\n" +cm);
+        ClienteModel clienteModel = clienteServices.convertDto(clienteRecordDto);
+        clienteModel.setId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(clienteServices.saveCliente(clienteModel));
     }
 
 

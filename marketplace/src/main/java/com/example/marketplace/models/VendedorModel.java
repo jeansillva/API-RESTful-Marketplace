@@ -1,6 +1,7 @@
 package com.example.marketplace.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -20,7 +21,7 @@ public class VendedorModel implements Serializable {
     private Long id;
 
     @OneToMany(mappedBy = "vendedor")
-    private List<ProdutoModel> produtosPertecentes;
+    private List<ProdutoModel> produtosPertecentes = new ArrayList<>();
 
     private String nome;
     private String cnpj;

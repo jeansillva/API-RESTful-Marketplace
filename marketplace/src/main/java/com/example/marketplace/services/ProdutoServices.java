@@ -3,9 +3,11 @@ package com.example.marketplace.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.marketplace.dtos.ProdutoRecordDto;
 import com.example.marketplace.models.ProdutoModel;
 import com.example.marketplace.repositories.ProdutoRepository;
 
@@ -31,5 +33,10 @@ public class ProdutoServices {
         produtoRepository.deleteById(id);
     }
 
+    public ProdutoModel convertDto(ProdutoRecordDto produtoRecordDto){
+        var produtoModel = new ProdutoModel();
+        BeanUtils.copyProperties(produtoRecordDto, produtoModel);
+        return produtoModel;
+    }
 
 }

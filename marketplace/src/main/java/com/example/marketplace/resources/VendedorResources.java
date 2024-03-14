@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.marketplace.dtos.VendedorRecordDto;
 import com.example.marketplace.models.VendedorModel;
 import com.example.marketplace.services.VendedorServices;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/vendedor")
@@ -42,19 +45,21 @@ public class VendedorResources {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<VendedorModel> saveVendedor(@RequestBody VendedorModel vendedorModel){
+    public ResponseEntity<VendedorModel> saveVendedor(@RequestBody @Valid VendedorRecordDto vendedorRecordDto){
+        VendedorModel vendedorModel = vendedorServices.convertDto(vendedorRecordDto);
         VendedorModel vendedorSaved = vendedorServices.saveVendedor(vendedorModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(vendedorSaved);
     }
 
     @PutMapping("/put/{id}")
-    public ResponseEntity<Object> putVendedor(@PathVariable Long id, @RequestBody VendedorModel vendedorModel){
+    public ResponseEntity<Object> putVendedor(@PathVariable Long id, @RequestBody @Valid VendedorRecordDto vendedorRecordDto){
         Optional<VendedorModel> vendedorOptional = vendedorServices.findById(id);
         if(vendedorOptional.isEmpty()){
             ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vendedor não encontrado!");
         }
-        VendedorModel vm = vendedorServices.saveVendedor(vendedorModel);
-        return ResponseEntity.status(HttpStatus.OK).body(vm);
+        VendedorModel vendedorModel = vendedorServices.convertDto(vendedorRecordDto);
+        vendedorModel.setId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(vendedorServices.saveVendedor(vendedorModel));
     }
 
     @DeleteMapping("/delete/{id}")
