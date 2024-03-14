@@ -58,6 +58,7 @@ public class ClienteResources {
         return ResponseEntity.status(HttpStatus.OK).body("Cliente Alterado com sucesso!\n" +cm);
     }
 
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deleteCliente(@PathVariable Long id){
         Optional<ClienteModel> optionalCliente = clienteServices.findById(id);
@@ -67,4 +68,6 @@ public class ClienteResources {
         clienteServices.deleteCliente(id);
         return ResponseEntity.status(HttpStatus.OK).body("Cliente excluído com sucesso!");
     }
+
+    
 }

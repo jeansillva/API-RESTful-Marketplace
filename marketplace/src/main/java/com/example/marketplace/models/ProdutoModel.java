@@ -2,6 +2,8 @@ package com.example.marketplace.models;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,10 +28,12 @@ public class ProdutoModel implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
+    @JsonIgnore
     private ClienteModel cliente;
 
     @ManyToOne
     @JoinColumn(name="vendedor_id")
+    @JsonIgnore
     private VendedorModel vendedor;
 
     public ProdutoModel() {
