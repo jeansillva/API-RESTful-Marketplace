@@ -1,5 +1,8 @@
 package com.example.marketplace.resources;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +34,12 @@ public class VendedorResources {
     @GetMapping
     public ResponseEntity<List<VendedorModel>> findAllVendedores(){
         List<VendedorModel> list = vendedorServices.findAll();
+        if(!list.isEmpty()){
+            for(VendedorModel produtoModel : list){
+                Long id = produtoModel.getId();
+                produtoModel.add(linkTo(methodOn(VendedorResources.class).findVendedorById(id)).withSelfRel());
+            }
+        }
         return ResponseEntity.status(HttpStatus.OK).body(list); 
     }
 
@@ -41,6 +50,7 @@ public class VendedorResources {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vendedor não encontrado!");
         }
         VendedorModel vm = vendedorOptional.get();
+        vm.add(linkTo(methodOn(VendedorResources.class).findAllVendedores()).withRel("Lista de Vendedores:"));
         return ResponseEntity.status(HttpStatus.OK).body(vm);
     }
 

@@ -19,6 +19,9 @@ import com.example.marketplace.dtos.ClienteRecordDto;
 import com.example.marketplace.models.ClienteModel;
 import com.example.marketplace.services.ClienteServices;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import jakarta.validation.Valid;
 
 
@@ -32,6 +35,12 @@ public class ClienteResources {
     @GetMapping
     public ResponseEntity<List<ClienteModel>> findAll(){
         List<ClienteModel> list = clienteServices.findAll();
+        if(!list.isEmpty()){
+            for(ClienteModel clienteModel : list){
+                Long id = clienteModel.getId();
+                clienteModel.add(linkTo(methodOn(ClienteResources.class).findById(id)).withSelfRel());
+            }
+        }
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
@@ -42,6 +51,7 @@ public class ClienteResources {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado!");
         }
         ClienteModel cm = clienteOptional.get();
+        cm.add(linkTo(methodOn(ClienteResources.class).findAll()).withRel("Lista de Clientes:"));
         return ResponseEntity.status(HttpStatus.OK).body(cm);
     }
 

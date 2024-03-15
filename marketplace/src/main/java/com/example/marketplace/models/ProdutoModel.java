@@ -2,6 +2,8 @@ package com.example.marketplace.models;
 
 import java.io.Serializable;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -15,7 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name= "TB_Produto")
-public class ProdutoModel implements Serializable {
+public class ProdutoModel extends RepresentationModel<ProdutoModel> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

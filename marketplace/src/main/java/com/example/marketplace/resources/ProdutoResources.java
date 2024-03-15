@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.marketplace.dtos.ProdutoRecordDto;
-import com.example.marketplace.models.ClienteModel;
 import com.example.marketplace.models.ProdutoModel;
 import com.example.marketplace.services.ProdutoServices;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import jakarta.validation.Valid;
 
@@ -32,6 +34,12 @@ public class ProdutoResources {
     @GetMapping
     public ResponseEntity<List<ProdutoModel>> getAllProdutos(){
         List<ProdutoModel> produtoList = produtoServices.findAll();
+        if(!produtoList.isEmpty()){
+            for(ProdutoModel produto : produtoList){
+                Long id = produto.getId();
+                produto.add(linkTo(methodOn(ProdutoResources.class).getProdutoById(id)).withSelfRel());
+            }
+        }
         return ResponseEntity.status(HttpStatus.OK).body(produtoList);
     }
 
@@ -42,6 +50,7 @@ public class ProdutoResources {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado!");
         }
         ProdutoModel pm = produtoOptional.get();
+        pm.add(linkTo(methodOn(ProdutoResources.class).getAllProdutos()).withRel("Lista de Produtos:"));
         return ResponseEntity.status(HttpStatus.OK).body(pm);
     }
     
