@@ -23,7 +23,7 @@ O projeto segue uma arquitetura em camadas, visando melhor organização e manut
 
 ## Próximos Passos
 
-Este é apenas o começo! Pretendo adicionar mais funcionalidades e aprimorar o projeto à medida que for aprendendo. Há muito o que desenvolver aqui! 
+Este é apenas o começo! Pretendo adicionar mais funcionalidades e aprimorar o projeto à medida que for aprendendo. Há muito o que desenvolver e melhorar por aqui! 
 
 
 
