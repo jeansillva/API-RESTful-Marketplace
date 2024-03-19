@@ -2,9 +2,13 @@ package com.example.marketplace.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +19,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TB_Clientes")
-public class ClienteModel extends RepresentationModel<ClienteModel> implements Serializable {
+public class ClienteModel extends RepresentationModel<ClienteModel> implements UserDetails, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -27,12 +31,18 @@ public class ClienteModel extends RepresentationModel<ClienteModel> implements S
     private String endereco;
     private String email;
     private String senha;
+    private UserRole role;
 
     @OneToMany(mappedBy = "cliente")
     private List<ProdutoModel> produtosComprados = new ArrayList<>();
     
     public ClienteModel(){
 
+    }
+    public ClienteModel(String nome, String endereco, String senha){
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
     }
 
     public ClienteModel(Long id, String nome, String cpf, String endereco, String email, String senha) {
@@ -92,6 +102,14 @@ public class ClienteModel extends RepresentationModel<ClienteModel> implements S
         this.senha = senha;
     }
 
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+    
     public List<ProdutoModel> getProdutosComprados() {
         return produtosComprados;
     }
@@ -120,7 +138,38 @@ public class ClienteModel extends RepresentationModel<ClienteModel> implements S
             return false;
         return true;
     }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == UserRole.ADMIN){
+           return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),
+            new SimpleGrantedAuthority("ROLE_USER"));
+        }
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+    @Override
+    public String getPassword() {
+        return this.senha;
+    }
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
-    
 
 }

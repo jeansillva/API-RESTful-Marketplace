@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,9 @@ public class ClienteResources {
 
     @Autowired
     ClienteServices clienteServices;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ResponseEntity<List<ClienteModel>> findAll(){
@@ -58,6 +62,8 @@ public class ClienteResources {
     @PostMapping("/post")
     public ResponseEntity<ClienteModel> createCliente(@RequestBody @Valid ClienteRecordDto clienteRecordDto){
         ClienteModel cm = clienteServices.convertDto(clienteRecordDto);
+        var password = passwordEncoder.encode(clienteRecordDto.senha());
+        cm.setSenha(password);
         ClienteModel savedCliente = clienteServices.saveCliente(cm);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCliente);
     }
