@@ -23,7 +23,4 @@ O projeto segue uma arquitetura em camadas, visando melhor organização e manut
 
 ## Próximos Passos
 
-Este é apenas o começo! Pretendo adicionar mais funcionalidades e aprimorar o projeto à medida que for aprendendo. Há muito o que desenvolver e melhorar por aqui! 
-
-
-
+No momento atual do projeto estou estudando sobre Spring Security, autenticação e JWT. Alguns commits poderão levar mais tempo para serem feitos juntamente com o código refatorado. Me certificarei de fazer commit apenas se o código estiver funcionando!
