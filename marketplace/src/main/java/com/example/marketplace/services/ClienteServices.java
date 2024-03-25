@@ -7,7 +7,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.marketplace.dtos.AuthDto;
 import com.example.marketplace.dtos.ClienteRecordDto;
 import com.example.marketplace.models.ClienteModel;
 import com.example.marketplace.repositories.ClienteRepository;

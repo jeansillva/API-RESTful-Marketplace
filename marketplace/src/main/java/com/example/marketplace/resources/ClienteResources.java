@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import jakarta.validation.Valid;
 
-
+@CrossOrigin(origins = {"http://localhost:8080", "https://jeansillva.com.br"})
 @RestController
 @RequestMapping(value = "/cliente")
 public class ClienteResources {
@@ -58,7 +59,7 @@ public class ClienteResources {
         cm.add(linkTo(methodOn(ClienteResources.class).findAll()).withRel("Lista de Clientes:"));
         return ResponseEntity.status(HttpStatus.OK).body(cm);
     }
-
+    
     @PostMapping("/post")
     public ResponseEntity<ClienteModel> createCliente(@RequestBody @Valid ClienteRecordDto clienteRecordDto){
         ClienteModel cm = clienteServices.convertDto(clienteRecordDto);

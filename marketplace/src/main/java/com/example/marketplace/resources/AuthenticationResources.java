@@ -23,7 +23,7 @@ public class AuthenticationResources {
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public String auth(@RequestBody AuthDto authDto){
-
+        
         var authToken = new UsernamePasswordAuthenticationToken(authDto.email(), authDto.senha());
         authenticationManager.authenticate(authToken);
 

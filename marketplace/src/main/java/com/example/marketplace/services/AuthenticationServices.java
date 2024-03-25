@@ -52,5 +52,19 @@ public class AuthenticationServices implements UserDetailsService {
         .plusHours(8)
         .toInstant(ZoneOffset.of("-03:00"));
     }
+
+    // public String validateToken(String token){
+    //     try {
+    //         Algorithm algorithm = Algorithm.HMAC256("chave-passe");
+    //         return JWT.require(algorithm)
+    //             .withIssuer("marketplace")
+    //             .build()
+    //             .verify(token)
+    //             .getSubject();
+                
+    //     } catch (JWTVerificationException e) {
+    //         return "";
+    //     }
+    // }
     
 }
